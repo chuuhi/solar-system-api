@@ -44,10 +44,7 @@ def get_all_planets():
 
 @planets_bp.get("/<planet_id>")
 def get_one_planet(planet_id):
-    query = db.select(Planet).where(Planet.id == planet_id)
-    planet = db.session.scalar(query)
-
-   # planet = validate_planet(planet_id)
+    planet = validate_planet(planet_id)
 
     return {
         "id": planet.id,
@@ -59,7 +56,7 @@ def get_one_planet(planet_id):
 def validate_planet(planet_id):
     try:
         planet_id = int(planet_id)
-    except:
+    except ValueError:
         response = {"message": f"planet {planet_id} invalid"}
         abort(make_response(response , 400))
 
