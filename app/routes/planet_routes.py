@@ -25,10 +25,17 @@ def create_planet():
 
 @planets_bp.get("")
 def get_all_planets():
-    query = db.select(Planet).order_by(Planet.id)
-    planets = db.session.scalars(query)
-    # We could also write the line above as:
-    # planets = db.session.execute(query).scalars()
+    query = db.select(Planet)
+
+    description_param = request.args.get("description")
+    if description_param:
+        query = query.where(Planet.description.ilike(f"%{description_param}%"))
+
+    distance_param = request.args.get("distance", type=int)
+    if distance_param is not None:
+        query = query.where(Planet.distance == distance_param)
+
+    planets = db.session.scalars(query.order_by(Planet.id))
 
     planets_response = []
     for planet in planets:
