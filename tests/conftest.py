@@ -48,8 +48,8 @@ def one_planet(app):
 def all_saved_planets(app):
     # Arrange
     planet1 = Planet(id=1,
-                    name="Mars",
-                    description="Good planet beside us",
+                    name="Earth",
+                    description="Our home planet",
                     distance=20000)
     planet2 = Planet(id=2,
                     name="Mercury",

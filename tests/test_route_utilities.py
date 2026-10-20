@@ -3,7 +3,7 @@ from app.models.planet import Planet
 from werkzeug.exceptions import HTTPException
 import pytest
 
-def test_validate_model(two_saved_planets):
+def test_validate_model(all_saved_planets):
     # Act
     result_planet = validate_model(Planet, 1)
 
@@ -12,7 +12,7 @@ def test_validate_model(two_saved_planets):
     assert result_planet.name == "Earth"
     assert result_planet.description == "Our home planet"
 
-def test_validate_model_missing_record(two_saved_planets):
+def test_validate_model_missing_record(all_saved_planets):
     # Act & Assert
     # Calling `validate_model` without being invoked by a route will
     # cause an `HTTPException` when an `abort` statement is reached 
@@ -22,7 +22,7 @@ def test_validate_model_missing_record(two_saved_planets):
     response = error.value.response
     assert response.status == "404 NOT FOUND"
     
-def test_validate_model_invalid_id(two_saved_planets):
+def test_validate_model_invalid_id(all_saved_planets):
     # Act & Assert
     # Calling `validate_model` without being invoked by a route will
     # cause an `HTTPException` when an `abort` statement is reached 
