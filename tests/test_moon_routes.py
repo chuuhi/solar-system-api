@@ -101,7 +101,7 @@ def test_create_planet_with_bad_moon_id(client):
     assert response.status_code == 400
     assert response_body == {"message":"Moon cat invalid"}
 
-def test_get_planets_by_moon_expects_two_planets(client, a_saved_planets, moon_with_two_planets):
+def test_get_planets_by_moon_expects_two_planets(client, all_saved_planets, moon_with_two_planets):
     # Act
     response = client.get("/moons/1/planets")
     response_body = response.get_json()

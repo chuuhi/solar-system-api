@@ -8,8 +8,7 @@ class Planet(db.Model):
     name: Mapped[str]
     description: Mapped[str]
     distance: Mapped[int]
-    moon_id: Mapped[Optional[int]] = mapped_column(ForeignKey("moon.id"))
-    moon: Mapped[Optional["Moon"]] = relationship(back_populates="planets")
+    moons: Mapped[list["Moon"]] = relationship(back_populates="planet")
 
     
     def to_dict(self):
@@ -19,15 +18,15 @@ class Planet(db.Model):
         planet_as_dict["description"] = self.description
         planet_as_dict["distance"] = self.distance
 
-        if self.moon:
-            planet_as_dict["moon"] = self.moon.name
+        if self.moons:
+            planet_as_dict["moons"] = [
+                moon.to_dict() for moon in self.moons
+                ]
 
         return planet_as_dict
 
     @classmethod
     def from_dict(cls, planet_data):
-        moon_id = planet_data.get("moon_id")
-
         new_planet = cls(name=planet_data["name"],
                         description=planet_data["description"],
                         distance=planet_data["distance"])

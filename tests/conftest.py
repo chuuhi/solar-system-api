@@ -3,6 +3,7 @@ from app import create_app
 from app.db import db
 from flask.signals import request_finished
 from app.models.planet import Planet
+from app.models.moon import Moon
 from dotenv import load_dotenv
 import os
 
@@ -72,3 +73,15 @@ def planet_with_two_moons(app, one_saved_moon):
 
     db.session.add_all([desert_planet, plains_planet])
     db.session.commit()
+
+@pytest.fixture
+def one_saved_moon(app):
+    moon = Moon(
+        id=1,
+        name="Luna",
+        description="Earth's moon"
+    )
+
+    db.session.add(moon)
+    db.session.commit()
+    return moon
