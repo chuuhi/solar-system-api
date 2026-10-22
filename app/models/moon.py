@@ -24,5 +24,6 @@ class Moon(db.Model):
         return cls(
             name=moon_data["name"],
             size=moon_data["size"],
-            description=moon_data["description"]
+            description=moon_data["description"],
+            planet_id=moon_data["planet_id"]
         )
