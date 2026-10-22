@@ -59,3 +59,16 @@ def all_saved_planets(app):
     db.session.add_all([planet1, planet2])
     db.session.commit()
     return [planet1, planet2]
+
+
+@pytest.fixture
+def planet_with_two_moons(app, one_saved_moon):    
+    desert_planet = Planet(name="Desert Planet",
+                       description="Sands all around",
+                       moon_id=1)
+    plains_planet = Planet(name="Plains Planet",
+                       description="Grasslands for miles",
+                       moon_id=1)
+
+    db.session.add_all([desert_planet, plains_planet])
+    db.session.commit()
